@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "react-app",
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "settings": {
+    "import/extensions": [
+      ".js",
+      ".jsx"
+    ]
+  },
+  "rules": {
+    "camelcase": ["error", {"properties": "never"}],
+    "import/no-named-as-default": 0,
+    "semi": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/prefer-default-export": "off",
+    "prettier/prettier": [
+      "error"
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+export const SET_MESSAGES = 'SET_MESSAGES';
+export const SET_MESSAGE_SAGA = 'SET_MESSAGE_SAGA';
+export const PUSH_NEW_MESSAGE = 'PUSH_NEW_MESSAGE';
