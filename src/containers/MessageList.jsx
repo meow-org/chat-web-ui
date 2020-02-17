@@ -53,7 +53,7 @@ const MessagesList = ({ data, users, selectedUserId }) => {
       <List>
         {data &&
           // eslint-disable-next-line camelcase
-          data.map(({ text, user_from_id }) => {
+          data.map(({ text, user_from_id, data }) => {
             const user = users[user_from_id];
             return (
               <ListItem>
@@ -62,7 +62,16 @@ const MessagesList = ({ data, users, selectedUserId }) => {
                     {user.username[0].toUpperCase()}
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={user.username} secondary={text} />
+                <ListItemText primary={
+                  <div className={classes.textHeader}>
+                    <div className={classes.firstTextHeader}>
+                      {user.username}
+                    </div>
+                    <div className={classes.secondTextHeader}>
+                      {data}
+                    </div>
+                  </div>
+                } secondary={text}  />
               </ListItem>
             );
           })}

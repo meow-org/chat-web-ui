@@ -1,12 +1,13 @@
 import { PUSH_NEW_MESSAGE } from '../constants/messages';
 
 // eslint-disable-next-line camelcase
-export const pushMessage = ({ text, user_from_id, user_to_id, id }) => ({
+export const pushMessage = ({ text, user_from_id, user_to_id, id, data }) => ({
   type: PUSH_NEW_MESSAGE,
   payload: {
     text,
     user_from_id,
     user_to_id,
     id,
+    data,
   },
 });

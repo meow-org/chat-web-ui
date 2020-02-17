@@ -9,36 +9,37 @@ import {
   Container,
   Link,
 } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuthStyles } from './styles';
 import Request from '../core/request';
 import { useDataAPI } from '../core/hooks';
-import { ChangePassSchema } from '../core/validators/auth';
+import { ValidatePassSchema } from '../core/validators/auth';
 import { StateFullAlert } from '../components';
 import { URLS } from '../conf';
 
-export default () => {
+export default ({ match }) => {
   const classes = useAuthStyles();
-  const [{ isLoading, isError, data }, request] = useDataAPI(Request.changePass);
+  const [{ isLoading, isError, data }, request] = useDataAPI(Request.validateNewPass);
   const { handleSubmit, register, errors } = useForm({
-    validationSchema: ChangePassSchema,
+    validationSchema: ValidatePassSchema,
   });
 
-  const onSubmit = values => request(values);
+  const onSubmit = values => request({ ...values, ...match.params });
+
+  if (!isError && data && data.success) {
+    return <Redirect to={URLS.SIGN_IN} />;
+  }
 
   return (
     <>
       {isLoading && <LinearProgress />}
       {isError && <StateFullAlert text={data} />}
-      {!isError && data && data.success && <StateFullAlert text={
-        <>We have sent a confirmation letter to your inbox. Please follow the link.</>
-      } severity="info"/>}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Change password
+            Set new password
           </Typography>
           <form
             className={classes.form}
@@ -48,13 +49,28 @@ export default () => {
             <TextField
               variant="outlined"
               margin="normal"
-              helperText={errors.email ? errors.email.message : ''}
+              name="password"
+              error={!!errors.password}
+              helperText={errors.password ? errors.password.message : ''}
               inputRef={register}
-              error={!!errors.email}
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              required
+              fullWidth
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              name="passwordConfirmation"
+              error={!!errors.passwordConfirmation}
+              helperText={errors.passwordConfirmation ? errors.passwordConfirmation.message : ''}
+              inputRef={register}
+              label="Confirm password"
+              type="password"
+              id="passwordConfirmation"
+              autoComplete="current-password"
               required
               fullWidth
             />
@@ -65,7 +81,7 @@ export default () => {
               color="primary"
               className={classes.submit}
             >
-              Change password
+              Submit
             </Button>
             <Grid container>
               <Grid item xs>

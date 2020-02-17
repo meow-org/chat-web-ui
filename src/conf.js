@@ -2,14 +2,18 @@ export const URLS = {
   SIGN_IN: '/sign-in',
   MAIN: '/',
   CHANGE_PASSWORD: '/change-password',
+  VALIDATE_PASSWORD: '/validate-password/:email/:email_token',
   SIGN_UP: '/sign-up',
+  VALIDATE_EMAIL: '/validate-email/:email_token'
 };
 
 export const API = {
   LOGIN: '/api/auth/login',
   REGISTRATION: '/api/auth/registration',
   VALIDATE_EMAIL: '/api/auth/validate-email',
-  LOGOUT: '/api/logout',
+  CHANGE_PASSWORD: '/api/auth/change-password',
+  VALIDATE_NEW_PASS: '/api/auth/validate-new-password',
+  LOGOUT: '/api/auth/logout',
 };
 
 export const SOCKET = {

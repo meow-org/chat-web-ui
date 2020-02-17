@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import BaseAvatar from '@material-ui/core/Avatar';
 
@@ -50,20 +51,36 @@ export const useStyles = makeStyles(theme => ({
       ...acc,
       [key]: {
         color: theme.palette.getContrastText(colors[key][400]),
-        backgroundColor: colors[key][400],
+        backgroundColor: colors[key][400]
       },
     }),
     {},
   ),
 }));
 
-const Avatar = ({ children, src, bg }) => {
+const Avatar = ({ children, src, bg, onClick }) => {
   const classes = useStyles();
   return (
-    <BaseAvatar src={src} className={classes[bg]}>
+    <BaseAvatar
+      src={src}
+      className={classes[bg]}
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
+    >
       {children}
     </BaseAvatar>
   );
+};
+
+Avatar.propTypes = {
+  children: PropTypes.node,
+  src: PropTypes.string,
+  bg: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+Avatar.defaultProps = {
+  onClick: () => {}
 };
 
 export default Avatar;

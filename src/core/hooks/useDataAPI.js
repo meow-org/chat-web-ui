@@ -51,10 +51,10 @@ export default fetcher => {
       if (response.status < 200 || response.status >= 300) {
         throw new Error(data.message);
       }
-      if (data.redirect) {
-        history.push(data.redirect);
-      }
       dispatch({ type: FETCH_SUCCESS, payload: data });
+
+      return response;
+
     } catch (e) {
       dispatch({ type: FETCH_ERROR, payload: e.message });
     }

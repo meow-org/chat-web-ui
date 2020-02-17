@@ -74,6 +74,16 @@ export const useMessageListStyles = makeStyles(() => ({
     overflowY: 'auto',
     marginBottom: 2,
   },
+  textHeader: {
+    display: 'flex',
+    justifyContent: 'start',
+    alignItems: 'center'
+  },
+  secondTextHeader: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 13
+  }
 }));
 
 export const useEditorStyles = makeStyles(() => ({

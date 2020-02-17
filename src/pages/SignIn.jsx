@@ -3,8 +3,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   LinearProgress,
   Grid,
   Typography,
@@ -74,10 +72,6 @@ export default () => {
               autoComplete="current-password"
               required
               fullWidth
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"

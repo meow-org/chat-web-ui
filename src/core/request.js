@@ -16,6 +16,8 @@ const Request = {
   registration: body => postFetch(API.REGISTRATION, body),
   validateEmail: body => postFetch(API.VALIDATE_EMAIL, body),
   logout: () => getFetch(API.LOGOUT),
+  changePass: body => postFetch(API.CHANGE_PASSWORD, body),
+  validateNewPass: body => postFetch(API.VALIDATE_NEW_PASS, body)
 };
 
 export default Request;

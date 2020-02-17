@@ -14,15 +14,15 @@ import { useForm } from 'react-hook-form';
 import { useAuthStyles } from './styles';
 import Request from '../core/request';
 import { useDataAPI } from '../core/hooks';
-import { ChangePassSchema } from '../core/validators/auth';
+import { RegistrationSchema } from '../core/validators/auth';
 import { StateFullAlert } from '../components';
 import { URLS } from '../conf';
 
 export default () => {
   const classes = useAuthStyles();
-  const [{ isLoading, isError, data }, request] = useDataAPI(Request.changePass);
+  const [{ isLoading, isError, data }, request] = useDataAPI(Request.registration);
   const { handleSubmit, register, errors } = useForm({
-    validationSchema: ChangePassSchema,
+    validationSchema: RegistrationSchema,
   });
 
   const onSubmit = values => request(values);
@@ -38,7 +38,7 @@ export default () => {
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Change password
+            Sign up
           </Typography>
           <form
             className={classes.form}
@@ -48,13 +48,39 @@ export default () => {
             <TextField
               variant="outlined"
               margin="normal"
+              helperText={errors.username ? errors.username.message : ''}
+              inputRef={register}
+              error={!!errors.username}
+              label="Your name"
+              name="username"
+              autoComplete="name"
+              autoFocus
+              required
+              fullWidth
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
               helperText={errors.email ? errors.email.message : ''}
               inputRef={register}
               error={!!errors.email}
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
+              required
+              fullWidth
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              name="password"
+              error={!!errors.password}
+              helperText={errors.password ? errors.password.message : ''}
+              inputRef={register}
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
               required
               fullWidth
             />
@@ -65,21 +91,21 @@ export default () => {
               color="primary"
               className={classes.submit}
             >
-              Change password
+              Sign up
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link
                   component={RouterLink}
-                  to={URLS.SIGN_IN}
+                  to={URLS.CHANGE_PASSWORD}
                   variant="body2"
                 >
-                  Sign in
+                  Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link component={RouterLink} to={URLS.SIGN_UP} variant="body2">
-                  Do not have an account? Sign Up
+                <Link component={RouterLink} to={URLS.SIGN_IN} variant="body2">
+                  Sign in
                 </Link>
               </Grid>
             </Grid>
