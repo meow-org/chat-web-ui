@@ -8,7 +8,7 @@ import {
   SET_CURRENT_USER,
   SET_USERS,
   SET_USER_NOTIFICATIONS,
-  SET_USER_NOTIFICATION,
+  UPDATE_NOTIFICATIONS,
 } from '../constants/users';
 import { SET_MESSAGES, SET_MESSAGE_SAGA } from '../constants/messages';
 
@@ -18,7 +18,7 @@ const RELATION = {
   [SERVER_CONST.DATA.GET_MESSAGES_FOR_USER]: SET_MESSAGES,
   [SERVER_CONST.DATA.SET_MESSAGE]: SET_MESSAGE_SAGA,
   [SERVER_CONST.DATA.GET_NOTIFICATIONS]: SET_USER_NOTIFICATIONS,
-  [SERVER_CONST.DATA.SET_NOTIFICATION]: SET_USER_NOTIFICATION,
+  [SERVER_CONST.DATA.UPDATE_NOTIFICATIONS]: UPDATE_NOTIFICATIONS,
 };
 
 const Socket = () => {
@@ -63,7 +63,9 @@ const Socket = () => {
     while (true) {
       const message = yield take(channel);
       const data = JSON.parse(message);
-      yield put({ type: RELATION[data.forType], ...data });
+      if(data.forType && RELATION[data.forType]){
+        yield put({ type: RELATION[data.forType], ...data });
+      }
     }
   }
 

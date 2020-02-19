@@ -27,9 +27,9 @@ export const useChatStyles = makeStyles(theme => ({
     display: 'flex',
     height: '100vh',
   },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
-  },
+  // toolbar: {
+  //   paddingRight: 24, // keep right padding when drawer closed
+  // },
   searchBar: {
     display: 'flex',
     alignItems: 'center',
@@ -46,6 +46,10 @@ export const useChatStyles = makeStyles(theme => ({
   },
   appBarShift: {
     marginLeft: drawerWidth,
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: 0,
+      width: '100%',
+    },
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -65,6 +69,12 @@ export const useChatStyles = makeStyles(theme => ({
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
+    [theme.breakpoints.down('xs')]: {
+      position: 'absolute',
+      top: 56,
+      height: 'calc(100vh - 56px)',
+      boxShadow: '4px 3px 15px -8px rgba(0,0,0,0.75)',
+    },
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -79,6 +89,9 @@ export const useChatStyles = makeStyles(theme => ({
     width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9),
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: theme.spacing(0),
     },
   },
   appBarSpacer: {

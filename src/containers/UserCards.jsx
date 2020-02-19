@@ -29,6 +29,7 @@ const UserCards = ({
   selectedId,
   getNotifications,
   notifications,
+  onUserClick,
 }) => {
   const classes = useUserCardStyles();
   const listRef = useRef();
@@ -60,11 +61,12 @@ const UserCards = ({
 
   const handleClick = id => () => {
     getMessages({ id });
+    onUserClick();
   };
 
   return (
     <List className={classes.root} ref={listRef}>
-      {data.map(({ id, username, online, bg }) => (
+      {data.map(({ id, username, online, bg, img }) => (
         <>
           <ListItem
             key={`key-${id}`}
@@ -85,7 +87,7 @@ const UserCards = ({
                 invisible={!notifications[id]}
                 badgeContent={notifications[id]}
               >
-                <Avatar bg={bg}>{username[0].toUpperCase()}</Avatar>
+                <Avatar bg={bg} src={img}>{username[0].toUpperCase()}</Avatar>
               </Badge>
             </ListItemAvatar>
             <ListItemText

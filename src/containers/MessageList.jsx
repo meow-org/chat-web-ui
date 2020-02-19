@@ -58,7 +58,7 @@ const MessagesList = ({ data, users, selectedUserId }) => {
             return (
               <ListItem>
                 <ListItemAvatar>
-                  <Avatar bg={user.bg} src={user.src}>
+                  <Avatar bg={user.bg} src={user.img}>
                     {user.username[0].toUpperCase()}
                   </Avatar>
                 </ListItemAvatar>

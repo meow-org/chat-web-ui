@@ -13,7 +13,7 @@ import { URLS } from '../conf';
 
 const ITEM_HEIGHT = 48;
 
-const UserPanel = ({ username, id, src }) => {
+const UserPanel = ({ username, id, img }) => {
   const classes = useUserPanelStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [_, requestLogout] = useDataAPI(Request.logout);
@@ -51,7 +51,7 @@ const UserPanel = ({ username, id, src }) => {
       <Typography color="inherit" noWrap className={classes.text}>
         {username}
       </Typography>
-      <Avatar  onClick={handleClick} src={src}>{username[0]}</Avatar>
+      <Avatar  onClick={handleClick} src={img}>{username[0]}</Avatar>
       <Menu
         id="long-menu"
         anchorEl={anchorEl}
@@ -65,7 +65,7 @@ const UserPanel = ({ username, id, src }) => {
           },
         }}
       >
-        <MenuItem key='logout' onClick={handleOpenProfile}>
+        <MenuItem key='profile' onClick={handleOpenProfile}>
           Profile
         </MenuItem>
         <MenuItem key='logout' onClick={handleClickLogout}>

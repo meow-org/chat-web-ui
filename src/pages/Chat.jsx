@@ -19,10 +19,15 @@ import {
   UserPanel,
 } from '../containers';
 import { initSocket } from '../core/actions/socket';
+import {useTheme} from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 const Chat = ({ init }) => {
   const classes = useChatStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [open, setOpen] = React.useState(true);
+
   const handleDrawerTrigger = () => {
     setOpen(!open);
   };
@@ -30,6 +35,14 @@ const Chat = ({ init }) => {
   useEffect(() => {
     init();
   }, [init]);
+
+  const closeDrawer = () => {
+    if(isMobile){
+      setTimeout(() => {
+        setOpen(false);
+      }, 150);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -71,9 +84,9 @@ const Chat = ({ init }) => {
           <SearchBar />
         </div>
         <Divider />
-        <UserCards />
+        <UserCards onUserClick={closeDrawer}/>
       </Drawer>
-      <main className={classes.content}>
+      <main className={classes.content} onClick={closeDrawer}>
         <div className={classes.appBarSpacer} />
         <MessageList />
         <Editor />

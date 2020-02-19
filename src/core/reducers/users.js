@@ -4,7 +4,7 @@ import {
   USER_DISCONNECT,
   SET_CURRENT_USER,
   SET_USER_NOTIFICATIONS,
-  SET_USER_NOTIFICATION,
+  UPDATE_NOTIFICATIONS,
 } from '../constants/users';
 
 const initState = {
@@ -60,7 +60,7 @@ export default (state = initState, action) => {
         ...state,
         notifications: action.payload.notifications,
       };
-    case SET_USER_NOTIFICATION: {
+    case UPDATE_NOTIFICATIONS: {
       return {
         ...state,
         notifications: {

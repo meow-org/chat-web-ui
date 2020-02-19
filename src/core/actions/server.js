@@ -30,3 +30,10 @@ export const sendMessageServer = ({ id, text }) => ({
 export const getNotificationsServer = () => ({
   type: SERVER_CONST.DATA.GET_NOTIFICATIONS,
 });
+
+export const setMessageAsRead = (messageId) => ({
+  type: SERVER_CONST.DATA.SET_MESSAGE_READ,
+  payload: {
+    messageId
+  }
+});
