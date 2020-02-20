@@ -14,6 +14,7 @@ export const API = {
   CHANGE_PASSWORD: '/api/auth/change-password',
   VALIDATE_NEW_PASS: '/api/auth/validate-new-password',
   LOGOUT: '/api/auth/logout',
+  UPLOAD_FILE_MESSAGE: '/api/upload/message/file',
 };
 
 export const SOCKET = {

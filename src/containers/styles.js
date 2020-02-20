@@ -121,3 +121,47 @@ export const useUserPanelStyles = makeStyles(() => ({
     margin: 10,
   },
 }));
+
+export const useFilrUploaderModalStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    position: 'relative',
+    '& > *': {
+      margin: theme.spacing(1),
+      width: theme.spacing(16),
+      height: theme.spacing(16),
+    },
+  },
+  img: {
+    width: '100%',
+  },
+  description: {
+    height: '100%',
+    fontSize: 16,
+    width: '100%',
+    padding: 20,
+    borderColor: "#e0e0e0",
+    flexGrow: 1,
+    display: 'flex',
+    outline: 'none',
+    resize: 'none',
+  },
+  paper: {
+    overflow: "hidden",
+    position: 'relative',
+    width: "125px",
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+  centerPaper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    textAlign: 'center',
+  }
+}));
