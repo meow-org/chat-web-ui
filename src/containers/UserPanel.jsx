@@ -47,7 +47,7 @@ const UserPanel = ({ username, id, img }) => {
 
   return (
     <div className={classes.root}>
-      <Profile open={openProfile} onClose={handleCloseProfile} />
+      <Profile currentUserName = {username} open={openProfile} onClose={handleCloseProfile} />
       <Typography color="inherit" noWrap className={classes.text}>
         {username}
       </Typography>

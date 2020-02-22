@@ -27,8 +27,7 @@ const useStyles = makeStyles(theme => ({
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const ProfileDialog = ({ open, onClose }) => {
+const ProfileDialog = ({ currentUserName, open, onClose }) => {
   const classes = useStyles();
 
   return (
@@ -40,7 +39,7 @@ const ProfileDialog = ({ open, onClose }) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Sound
+              Profile
             </Typography>
             <Button autoFocus color="inherit" onClick={onClose}>
               save
@@ -49,19 +48,18 @@ const ProfileDialog = ({ open, onClose }) => {
         </AppBar>
         <List>
           <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
+            <ListItemText primary="Username" secondary={ currentUserName } />
           </ListItem>
           <Divider />
-          <ListItem button>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-          </ListItem>
         </List>
       </Dialog>
     </div>
   );
 };
 
+
 ProfileDialog.propTypes = {
+  currentUserName: PropTypes.string,
   open: PropTypes.bool,
   onClose: PropTypes.func,
 };
