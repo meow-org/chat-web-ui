@@ -9,6 +9,12 @@ const postFetch = (utl, body) =>
     body: JSON.stringify(body),
   });
 
+const fileUploader = (url, formData) =>
+  fetch(url, {
+    method: 'POST',
+    body: formData
+  });
+
 const getFetch = utl => fetch(utl);
 
 const Request = {
@@ -17,7 +23,8 @@ const Request = {
   validateEmail: body => postFetch(API.VALIDATE_EMAIL, body),
   logout: () => getFetch(API.LOGOUT),
   changePass: body => postFetch(API.CHANGE_PASSWORD, body),
-  validateNewPass: body => postFetch(API.VALIDATE_NEW_PASS, body)
+  validateNewPass: body => postFetch(API.VALIDATE_NEW_PASS, body),
+  uploadFileMessage: formData => fileUploader(API.UPLOAD_FILE_MESSAGE, formData)
 };
 
 export default Request;

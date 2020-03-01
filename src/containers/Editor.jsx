@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import trim from 'lodash/trim';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import { Send } from '@material-ui/icons';
+import { Send, AttachFile } from '@material-ui/icons';
 import { useEditorStyles } from './styles';
 import { sendMessageServer } from '../core/actions/server';
+import FileUploadModal from './FileUploadModal';
 
 const Editor = ({ selectedId, sendMessage }) => {
   const classes = useEditorStyles();
@@ -26,10 +27,31 @@ const Editor = ({ selectedId, sendMessage }) => {
     }
   };
 
+  const handleFinishUpload = (files, text) => {
+    let imageMarkDown = '';
+    files.forEach(({ name, url }) => {
+      imageMarkDown += `![${name}](${url})`;
+    });
+    sendMessage({ id: selectedId, text: imageMarkDown + trim(text) });
+  };
+
   if (!selectedId) return null;
 
   return (
     <Paper className={classes.root}>
+      <FileUploadModal onFinish={handleFinishUpload}>
+        {onClick => (
+          <div className={classes.btn}>
+            <IconButton
+              color="primary"
+              aria-label="send file"
+              onClick={onClick}
+            >
+              <AttachFile />
+            </IconButton>
+          </div>
+        )}
+      </FileUploadModal>
       <textarea
         className={classes.text}
         placeholder="Set message"
@@ -38,7 +60,7 @@ const Editor = ({ selectedId, sendMessage }) => {
       <div className={classes.btn}>
         <IconButton
           color="primary"
-          aria-label="add to shopping cart"
+          aria-label="send message"
           onClick={handleClick}
         >
           <Send />

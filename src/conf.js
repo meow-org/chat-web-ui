@@ -14,6 +14,7 @@ export const API = {
   CHANGE_PASSWORD: '/api/auth/change-password',
   VALIDATE_NEW_PASS: '/api/auth/validate-new-password',
   LOGOUT: '/api/auth/logout',
+  UPLOAD_FILE_MESSAGE: '/api/upload/message/file',
 };
 
 export const SOCKET = {
@@ -33,4 +34,11 @@ export const SERVER_CONST = {
   },
   CONNECT: '@SERVER/USER_CONNECT',
   DISCONNECT: '@SERVER/USER_DISCONNECT',
+};
+
+export const UPLOAD_PATHS = {
+  DOCUMENTS: {
+    SOURCE: '/static/upload/documents/source/',
+    MIN: '/static/upload/documents/minimization/',
+  },
 };

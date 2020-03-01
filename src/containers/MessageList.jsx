@@ -7,8 +7,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 import { useMessageListStyles } from './styles';
 import { Avatar } from '../components';
+import { UPLOAD_PATHS } from '../conf';
 
 const MessagesList = ({ data, users, selectedUserId }) => {
   const classes = useMessageListStyles();
@@ -22,6 +25,36 @@ const MessagesList = ({ data, users, selectedUserId }) => {
 
   const scrolledBottom = () => {
     listRef.current.scrollTop = listRef.current.scrollHeight;
+  };
+
+  const getText = text => {
+    const images = [];
+    const newText = text.replace(/(!\[.*?\]\()(.+?)(\))/g, function(
+      _,
+      name,
+      url,
+    ) {
+      images.push({ name, url });
+      return '';
+    });
+
+    return images.length ? (
+      <>
+        <GridList cellHeight={160} className={classes.gridList} cols={3}>
+          {images.map(tile => (
+            <GridListTile key={tile.url} cols={tile.cols || 1}>
+              <img
+                src={`${UPLOAD_PATHS.DOCUMENTS.MIN}${tile.url}`}
+                alt={tile.name}
+              />
+            </GridListTile>
+          ))}
+        </GridList>
+        {newText}
+      </>
+    ) : (
+      text
+    );
   };
 
   useEffect(() => {
@@ -53,7 +86,7 @@ const MessagesList = ({ data, users, selectedUserId }) => {
       <List>
         {data &&
           // eslint-disable-next-line camelcase
-          data.map(({ text, user_from_id, data }) => {
+          data.map(({ text, user_from_id, date }) => {
             const user = users[user_from_id];
             return (
               <ListItem>
@@ -62,16 +95,17 @@ const MessagesList = ({ data, users, selectedUserId }) => {
                     {user.username[0].toUpperCase()}
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={
-                  <div className={classes.textHeader}>
-                    <div className={classes.firstTextHeader}>
-                      {user.username}
+                <ListItemText
+                  primary={
+                    <div className={classes.textHeader}>
+                      <div className={classes.firstTextHeader}>
+                        {user.username}
+                      </div>
+                      <div className={classes.secondTextHeader}>{date}</div>
                     </div>
-                    <div className={classes.secondTextHeader}>
-                      {data}
-                    </div>
-                  </div>
-                } secondary={text}  />
+                  }
+                  secondary={getText(text)}
+                />
               </ListItem>
             );
           })}

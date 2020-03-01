@@ -20,7 +20,9 @@ import { URLS } from '../conf';
 
 export default () => {
   const classes = useAuthStyles();
-  const [{ isLoading, isError, data }, request] = useDataAPI(Request.changePass);
+  const [{ isLoading, isError, data }, request] = useDataAPI(
+    Request.changePass,
+  );
   const { handleSubmit, register, errors } = useForm({
     validationSchema: ChangePassSchema,
   });
@@ -31,9 +33,17 @@ export default () => {
     <>
       {isLoading && <LinearProgress />}
       {isError && <StateFullAlert text={data} />}
-      {!isError && data && data.success && <StateFullAlert text={
-        <>We have sent a confirmation letter to your inbox. Please follow the link.</>
-      } severity="info"/>}
+      {!isError && data && data.success && (
+        <StateFullAlert
+          text={
+            <>
+              We have sent a confirmation letter to your inbox. Please follow
+              the link.
+            </>
+          }
+          severity="info"
+        />
+      )}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -69,11 +79,7 @@ export default () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link
-                  component={RouterLink}
-                  to={URLS.SIGN_IN}
-                  variant="body2"
-                >
+                <Link component={RouterLink} to={URLS.SIGN_IN} variant="body2">
                   Sign in
                 </Link>
               </Grid>

@@ -10,6 +10,8 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { useTheme } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import { useChatStyles } from './styles';
 import {
   UserCards,
@@ -19,8 +21,6 @@ import {
   UserPanel,
 } from '../containers';
 import { initSocket } from '../core/actions/socket';
-import {useTheme} from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 const Chat = ({ init }) => {
   const classes = useChatStyles();
@@ -37,7 +37,7 @@ const Chat = ({ init }) => {
   }, [init]);
 
   const closeDrawer = () => {
-    if(isMobile){
+    if (isMobile) {
       setTimeout(() => {
         setOpen(false);
       }, 150);
@@ -84,7 +84,7 @@ const Chat = ({ init }) => {
           <SearchBar />
         </div>
         <Divider />
-        <UserCards onUserClick={closeDrawer}/>
+        <UserCards onUserClick={closeDrawer} />
       </Drawer>
       <main className={classes.content} onClick={closeDrawer}>
         <div className={classes.appBarSpacer} />
