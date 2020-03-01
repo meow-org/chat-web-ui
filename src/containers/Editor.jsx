@@ -27,24 +27,26 @@ const Editor = ({ selectedId, sendMessage }) => {
     }
   };
 
+  const handleFileUpload = (urls, text) => {
+
+  };
+
   if (!selectedId) return null;
 
   return (
     <Paper className={classes.root}>
-      <FileUploadModal>
-        {
-          onClick => (
-            <div className={classes.btn}>
-              <IconButton
-                color="primary"
-                aria-label="send file"
-                onClick={onClick}
-              >
-                <AttachFile />
-              </IconButton>
-            </div>
-          )
-        }
+      <FileUploadModal onFinish={handleFileUpload}>
+        {onClick => (
+          <div className={classes.btn}>
+            <IconButton
+              color="primary"
+              aria-label="send file"
+              onClick={onClick}
+            >
+              <AttachFile />
+            </IconButton>
+          </div>
+        )}
       </FileUploadModal>
       <textarea
         className={classes.text}

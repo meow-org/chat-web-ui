@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import MuiDialog from '@material-ui/core/Dialog';
@@ -10,9 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Add from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
+import trim from 'lodash/trim';
 import { useFilrUploaderModalStyles } from './styles';
 import Request from '../core/request';
-import trim from "lodash/trim";
 
 const styles = theme => ({
   root: {
@@ -33,7 +33,11 @@ const DialogTitle = withStyles(styles)(props => {
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -54,36 +58,36 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-export default function CustomizedDialogs({ children, onLoading, onFinish, onError }) {
+function FileUploadModal({
+  children,
+  onLoading,
+  onFinish,
+  onError,
+}) {
   const [open, setOpen] = React.useState(false);
   const [stateFiles, setFiles] = React.useState([]);
   const classes = useFilrUploaderModalStyles();
   const fileUploaderRef = React.useRef();
   const textRef = React.useRef();
 
-
-  const handleClickOpen = (e) => {
+  const handleClickOpen = e => {
     e.stopPropagation();
     e.preventDefault();
-    const files = e.target.files;
+    const { files } = e.target;
 
-    if(files){
+    if (files) {
       Object.values(files).forEach(file => {
         const reader = new FileReader();
 
-        reader.onload = (e) => {
-          console.log(e.target.result);
-          stateFiles.push({ preview: e.target.result, file: file });
-          setFiles([...stateFiles])
+        reader.onload = e => {
+          stateFiles.push({ preview: e.target.result, file });
+          setFiles([...stateFiles]);
         };
 
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
       });
       setOpen(true);
     }
-  };
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const removeFile = id => e => {
@@ -95,9 +99,10 @@ export default function CustomizedDialogs({ children, onLoading, onFinish, onErr
     fileUploaderRef.current.click();
   };
 
-  const clear = () => {
+  const clearAndClose = () => {
     textRef.current.value = '';
     setFiles([]);
+    setOpen(false);
   };
 
   const uploadFile = async () => {
@@ -108,11 +113,11 @@ export default function CustomizedDialogs({ children, onLoading, onFinish, onErr
       const response = await Request.uploadFileMessage(files);
       const data = await response.json();
       if (response.ok) {
-        onFinish(data.urls, text);
-        clear()
+        onFinish(data.files, text);
+        clearAndClose();
       }
     } catch (e) {
-      onError(e.message)
+      onError(e.message);
     }
     onLoading(false);
   };
@@ -125,26 +130,36 @@ export default function CustomizedDialogs({ children, onLoading, onFinish, onErr
         ref={fileUploaderRef}
         multiple
         accept=".jpg, .jpeg, .png"
-        style={{display: "none"}}
+        style={{ display: 'none' }}
         onChange={handleClickOpen}
       />
       {children(handleFileUploaderClick)}
-      <MuiDialog fullWidth onClose={handleClose} maxWidth="sm" aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+      <MuiDialog
+        fullWidth
+        onClose={clearAndClose}
+        maxWidth="sm"
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle id="customized-dialog-title" onClose={clearAndClose}>
           Upload file
         </DialogTitle>
         <DialogContent dividers>
           <div className={classes.root}>
-            {
-              stateFiles.map(({ preview }, id) => (
-                <Paper className={classes.paper}>
-                  <IconButton size="small" aria-label="close" className={classes.closeButton} onClick={removeFile(id)}>
-                    <CloseIcon />
-                  </IconButton>
-                  <img src={preview} className={classes.img}/>
-                </Paper>
-              ))
-            }
+            {stateFiles.map(({ preview }, id) => (
+              <Paper className={classes.paper}>
+                <IconButton
+                  size="small"
+                  aria-label="close"
+                  className={classes.closeButton}
+                  onClick={removeFile(id)}
+                >
+                  <CloseIcon />
+                </IconButton>
+                {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                <img src={preview} className={classes.img} />
+              </Paper>
+            ))}
             <Paper className={classes.centerPaper}>
               <IconButton aria-label="close" onClick={handleFileUploaderClick}>
                 <Add />
@@ -155,7 +170,8 @@ export default function CustomizedDialogs({ children, onLoading, onFinish, onErr
           <textarea
             ref={textRef}
             className={classes.description}
-            placeholder="Set message"/>
+            placeholder="Set message"
+          />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={uploadFile} color="primary">
@@ -166,3 +182,12 @@ export default function CustomizedDialogs({ children, onLoading, onFinish, onErr
     </div>
   );
 }
+
+FileUploadModal.defaultProps = {
+  children: null,
+  onLoading: () => {},
+  onFinish: () => {},
+  onError: () => {},
+};
+
+export default FileUploadModal;
