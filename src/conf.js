@@ -35,3 +35,10 @@ export const SERVER_CONST = {
   CONNECT: '@SERVER/USER_CONNECT',
   DISCONNECT: '@SERVER/USER_DISCONNECT',
 };
+
+export const UPLOAD_PATHS = {
+  DOCUMENTS: {
+    SOURCE: '/static/upload/documents/source/',
+    MIN: '/static/upload/documents/minimization/',
+  },
+};

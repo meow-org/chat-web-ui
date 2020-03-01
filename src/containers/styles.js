@@ -64,7 +64,7 @@ export const useSearchBarStyles = makeStyles(theme => ({
   },
 }));
 
-export const useMessageListStyles = makeStyles(() => ({
+export const useMessageListStyles = makeStyles((theme) => ({
   root: {
     paddingRight: 20,
     paddingTop: 20,
@@ -77,13 +77,26 @@ export const useMessageListStyles = makeStyles(() => ({
   textHeader: {
     display: 'flex',
     justifyContent: 'start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   secondTextHeader: {
     paddingLeft: 10,
     paddingRight: 10,
-    fontSize: 13
-  }
+    fontSize: 13,
+  },
+  grid: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    cursor: 'pointer',
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
 }));
 
 export const useEditorStyles = makeStyles(() => ({
@@ -141,16 +154,16 @@ export const useFilrUploaderModalStyles = makeStyles(theme => ({
     fontSize: 16,
     width: '100%',
     padding: 20,
-    borderColor: "#e0e0e0",
+    borderColor: '#e0e0e0',
     flexGrow: 1,
     display: 'flex',
     outline: 'none',
     resize: 'none',
   },
   paper: {
-    overflow: "hidden",
+    overflow: 'hidden',
     position: 'relative',
-    width: "125px",
+    width: '125px',
   },
   closeButton: {
     position: 'absolute',
@@ -163,5 +176,5 @@ export const useFilrUploaderModalStyles = makeStyles(theme => ({
     alignItems: 'center',
     padding: 10,
     textAlign: 'center',
-  }
+  },
 }));

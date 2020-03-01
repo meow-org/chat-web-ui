@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useRef} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import MuiDialog from '@material-ui/core/Dialog';
@@ -58,12 +58,7 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-function FileUploadModal({
-  children,
-  onLoading,
-  onFinish,
-  onError,
-}) {
+function CustomizedDialogs({ children, onLoading, onFinish, onError }) {
   const [open, setOpen] = React.useState(false);
   const [stateFiles, setFiles] = React.useState([]);
   const classes = useFilrUploaderModalStyles();
@@ -106,11 +101,14 @@ function FileUploadModal({
   };
 
   const uploadFile = async () => {
-    const files = stateFiles.map(({ file }) => file);
+    const form = new FormData();
+    stateFiles.forEach(({ file }) => {
+      form.append('file', file);
+    });
     const text = trim(textRef.current.value);
     onLoading(true);
     try {
-      const response = await Request.uploadFileMessage(files);
+      const response = await Request.uploadFileMessage(form);
       const data = await response.json();
       if (response.ok) {
         onFinish(data.files, text);
@@ -156,7 +154,6 @@ function FileUploadModal({
                 >
                   <CloseIcon />
                 </IconButton>
-                {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 <img src={preview} className={classes.img} />
               </Paper>
             ))}
@@ -183,11 +180,11 @@ function FileUploadModal({
   );
 }
 
-FileUploadModal.defaultProps = {
+CustomizedDialogs.defaultProps = {
   children: null,
   onLoading: () => {},
   onFinish: () => {},
   onError: () => {},
 };
 
-export default FileUploadModal;
+export default CustomizedDialogs;

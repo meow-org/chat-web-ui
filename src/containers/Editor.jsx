@@ -27,15 +27,19 @@ const Editor = ({ selectedId, sendMessage }) => {
     }
   };
 
-  const handleFileUpload = (urls, text) => {
-
+  const handleFinishUpload = (files, text) => {
+    let imageMarkDown = '';
+    files.forEach(({ name, url }) => {
+      imageMarkDown += `![${name}](${url})`;
+    });
+    sendMessage({ id: selectedId, text: imageMarkDown + trim(text) });
   };
 
   if (!selectedId) return null;
 
   return (
     <Paper className={classes.root}>
-      <FileUploadModal onFinish={handleFileUpload}>
+      <FileUploadModal onFinish={handleFinishUpload}>
         {onClick => (
           <div className={classes.btn}>
             <IconButton
