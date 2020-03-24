@@ -135,7 +135,7 @@ export const useUserPanelStyles = makeStyles(() => ({
   },
 }));
 
-export const useFilrUploaderModalStyles = makeStyles(theme => ({
+export const useFileUploaderModalStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
