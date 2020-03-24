@@ -4,3 +4,4 @@ export { default as MessageList } from './MessageList';
 export { default as Editor } from './Editor';
 export { default as UserPanel } from './UserPanel';
 export { default as Profile } from './Profile';
+export { default as ProgressBar} from './ProgressBar';

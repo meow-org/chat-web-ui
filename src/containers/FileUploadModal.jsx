@@ -11,7 +11,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Add from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import trim from 'lodash/trim';
-import { useFilrUploaderModalStyles } from './styles';
+import { useFileUploaderModalStyles } from './styles';
+import ProgressBar from './ProgressBar';
 import Request from '../core/request';
 
 const styles = theme => ({
@@ -24,6 +25,7 @@ const styles = theme => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500],
+    zIndex:2,
   },
 });
 
@@ -58,12 +60,16 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
+
 function CustomizedDialogs({ children, onLoading, onFinish, onError }) {
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [stateFiles, setFiles] = React.useState([]);
-  const classes = useFilrUploaderModalStyles();
+  const classes = useFileUploaderModalStyles();
   const fileUploaderRef = React.useRef();
   const textRef = React.useRef();
+    
+
 
   const handleClickOpen = e => {
     e.stopPropagation();
@@ -106,7 +112,7 @@ function CustomizedDialogs({ children, onLoading, onFinish, onError }) {
       form.append('file', file);
     });
     const text = trim(textRef.current.value);
-    onLoading(true);
+    setLoading(true);
     try {
       const response = await Request.uploadFileMessage(form);
       const data = await response.json();
@@ -117,7 +123,7 @@ function CustomizedDialogs({ children, onLoading, onFinish, onError }) {
     } catch (e) {
       onError(e.message);
     }
-    onLoading(false);
+    setLoading(false);
   };
 
   return (
@@ -139,6 +145,7 @@ function CustomizedDialogs({ children, onLoading, onFinish, onError }) {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
+        {ProgressBar(loading)}
         <DialogTitle id="customized-dialog-title" onClose={clearAndClose}>
           Upload file
         </DialogTitle>
@@ -152,7 +159,7 @@ function CustomizedDialogs({ children, onLoading, onFinish, onError }) {
                   className={classes.closeButton}
                   onClick={removeFile(id)}
                 >
-                  <CloseIcon />
+                 <CloseIcon className={classes.closeIcon}/>
                 </IconButton>
                 <img src={preview} className={classes.img} />
               </Paper>
