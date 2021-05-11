@@ -24,7 +24,7 @@
     "@material-ui/lab": "^4.0.0-alpha.40",
     "prop-types": "^15.7.2",
     "clsx": "^1.0.4",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   },
   "scripts": {
     "start": "react-scripts start",
